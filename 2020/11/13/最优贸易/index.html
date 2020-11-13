@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
   
-  <title itemprop="name">最佳加法表达式 | YukiSong</title>
+  <title itemprop="name">洛谷P1073 最优贸易 | YukiSong</title>
   
     <link rel="shortcut icon" href="/images/cover/tutu_2.ico">
   
@@ -267,11 +267,11 @@
 
   <div class="pattern-center single-center">
     <!-- 有配图默认渲染第一张 -->
-    <div class="pattern-attachment-img lazyload" style="background-image: url(https://cdn.jsdelivr.net/gh/JXNU-SONG/cdn@1.0.4/images/cover/ailisi.png);" src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://cdn.jsdelivr.net/gh/JXNU-SONG/cdn@1.0.4/images/cover/ailisi.png">
+    <div class="pattern-attachment-img lazyload" style="background-image: url(https://cdn.jsdelivr.net/gh/JXNU-SONG/cdn@1.1.3/images/cover/02.png);" src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://cdn.jsdelivr.net/gh/JXNU-SONG/cdn@1.1.3/images/cover/02.png">
     </div>
     <header class="pattern-header single-header">
       <h1 class="entry-title">
-      最佳加法表达式</h1>
+      洛谷P1073 最优贸易</h1>
       <p class="entry-census">
         <span>
           <a href="yukisong.com">
@@ -283,7 +283,7 @@
         </span>
         <span class="bull">
         ·</span>
-        2020-4-1<span class="bull">
+        2020-11-13<span class="bull">
         ·</span>
       <span id="busuanzi_value_page_pv"></span>次阅读</p>
     </header>
@@ -297,199 +297,107 @@
         <!--<div class="toc-entry-content"><!-- 套嵌目录使用（主要为了支援评论）-->
         
         <div class="entry-content">
-          <h1 id="4152-最佳加法表达式（C-C-基础写法，无任何特殊函数）"><a href="#4152-最佳加法表达式（C-C-基础写法，无任何特殊函数）" class="headerlink" title="4152:最佳加法表达式（C/C++基础写法，无任何特殊函数）"></a>4152:最佳加法表达式（C/C++基础写法，无任何特殊函数）</h1><p><a href="http://bailian.openjudge.cn/practice/4152/" target="_blank" rel="noopener">最佳加法表达式题目链接</a></p>
-<p><strong>4152:最佳加法表达式</strong></p>
-<p><strong>时间限制</strong>: 1000ms<br><strong>内存限制</strong>: 65536kB</p>
-<p><strong>描述</strong><br>给定n个1到9的数字，要求在数字之间摆放m个加号(加号两边必须有数字），使得所得到的加法表达式的值最小，并输出该值。例如，在1234中摆放1个加号，最好的摆法就是12+34,和为36</p>
-<p><strong>输入</strong><br>有不超过15组数据<br>每组数据两行。第一行是整数m，表示有m个加号要放( 0&lt;=m&lt;=50)<br>第二行是若干个数字。数字总数n不超过50,且 m &lt;= n-1<br>输出<br>对每组数据，输出最小加法表达式的值<br><strong>样例输入</strong><br>2<br>123456<br>1<br>123456<br>4<br>12345</p>
-<p><strong>样例输出</strong><br>102<br>579<br>15</p>
-<p><strong>提示<br>要用到高精度计算，即用数组来存放long long 都装不下的大整数，并用模拟列竖式的办法进行大整数的加法。</strong></p>
-<p>首先这是一道动态规划的题目，本人是用递推的方式来进行解答的。这题个人感觉确实很复杂，因为不仅仅要找到动态规划的子问题，还要实现高精度计算和比大小。然后因为鉴于本人尚未学习C++的STL库函数，这里的语法和函数只要是学完了c或者c++的基础语法的同学都是可以看懂的。那么一步步来吧：</p>
-<p><strong>1.找到递推式</strong>：如果是看过郭炜老师慕课的同学，相信对找到子问题应该是差不多明白的，郭炜老师讲的还是十分清楚滴，不会的话多看几遍应该就可以懂了。那么简单的说明一下就是考虑最后一个加号的位置，假设要插入m个加号到n个数字中，然后最后一个加号的位置可以有很多，但是起码得放在前面有m个数字的后一位，因为毕竟前面要放下m-1个加号，然后也最起码得放在最后一个数字前面。这就是最后一个加号位置的所有情况了。现在我们假设把‘+’放在了第i个数字的右边，那么它的值将会等于在i个数字中插入m-1个加号的最佳加法表达式的值，再加上后面一串直接形成的数字的值。所以依据我们上面所说的最后一个加号的所有可能的情况的分析，我们得在m&lt;=i&lt;=n-1中找到最合适的i使得值最小。这也就是递推式V(m,n)=Min{V(M-1,I)+Num(i+1,n)}(i=m…n-1)的由来。<br>注：倘若m==0,那么值自然直接等于那串数字。</p>
-<p><strong>2.高精度计算</strong>：我觉得这就是让这题突然变得很复杂的地方，可能一开始会觉得，哎呀找到递推式啦，好像就要快写出来了，然后发现要高精度计算，然后还发现要不断的高精度计算，还得去把高精度计算的结果去比较，和保存，也就相当于赋值一样。当然能不耐烦的去调试的话，还是可以写出来的。<br><em>（1）开一个结构体</em>：因为这里用到的是递推，然后有两个变量分别是m和n，所以得用二维数组来递推，然后每一个元素里面包含的是一个高精度数值，也就是个数组，所以得在二维数组里面放数组，比较方便的就是开一个结构体。</p>
-<pre><code class="cpp">struct kkk
-{
-    char num[110];
-}Num[110][110],v[110][110];
-</code></pre>
-<p>下面kkk都代表这个结构体哟（这个结构体我是真的不知道取啥名）<br><em>（2）高精度加法</em>：这里因为只要添加‘+’，所以我们只要进行高精度加法。（本人写的高精度加法可能有点复杂，因为可能也是第一次写，但我会尽力写上说明和注释让大家看懂）==说明：传入的两个结构体肯定一个是Num[ ][ ]，一个是v[ ][ ],然后为了更方便的计算，就把Num[ ][ ]和v[ ][ ]里面的值首先转成数字存到q[ ]和w[ ]里面，结果先由c去接收，因为加出来会有别的特殊情况，所以最终结果用cz接收。==</p>
-<pre><code class="cpp">void pluss(kkk a,kkk b,int q[],int w[],int c[],char cz[])
-{
-    int lena=strlen(a.num),lenb=strlen(b.num),i,j;//将值存入q[]
-    for(int i=0,j=lena-1;j&gt;=0;++i,j--)//值存入时是倒置存入，这样更方便进位和计算。
-    {
-        q[i]=a.num[j]-48;
-    }
-    for(int i=0,j=lenb-1;j&gt;=0;++i,j--)//将值存入w[]
-    {
-        w[i]=b.num[j]-48;
-    }
-    int g=max(lena,lenb);//找到位数最多的一个数字，那么他们加起来最多就只有g+1位
-    for(int i=0;i&lt;g;++i)
-    {
-        c[g-i]+=q[i]+w[i];
-        if(c[g-i]&gt;=10)//进位
-        {
-            c[g-i]-=10;
-            c[g-i-1]+=1;
-        }
-    }
-    if(c[0])//数组本身是全置0的，倘若第一位还是0，那么说明加到最高位的时候并没有进位，反之则进位
-        i=0;
-    else
-        i=1;
-    for(j=0;i&lt;=g;++i,j++)//将结果存到cz中
-    {
-        cz[j]=c[i]+48;
-    }
-    cz[j]=&#39;\0&#39;;
-}
-</code></pre>
-<p><em>（3）高精度比较</em>：那么要找到最小只会相加肯定不行，还要比大小。当然，比较大小就很好理解了。==说明：比大小就直接先比位数，说白了就是比长度，长度一样直接一用strcmp函数就出来了。==</p>
-<pre><code class="cpp">int compare(kkk minmin,char c[])
-{
-    int lenc=strlen(c),lenmin=strlen(minmin.num);
-    if(lenc&gt;lenmin)//比位数
-        return 0;
-    else if(lenc&lt;lenmin)
-        return 1;
-    else
-    {
-        if(strcmp(c,minmin.num)&lt;0)
-            return 1;
-        else
-            return 0;
-    }
-}
-</code></pre>
-<p><em>（4）高精度赋值</em>：这个我想不需要细讲，说白了就像字符串复制一样。一开始就得把所有的Num[ ][ ]给“赋值”上，毕竟人家在我们输入完之后就是定值。还有比完大小之后，如果比成功了那就得给最小值赋新的值，最后也要把最小值赋给v数组里面的相应元素，所以要进行这个“赋值”操作。==说明：m,n分别代表复制的起点下标和终点下标。==</p>
-<pre><code class="cpp">void mycopy(char a[],char b[],int m,int n)
-{
-    int i,j;
-    for(i=m,j=0;i&lt;=n;++i,j++)
-    {
-        b[j]=a[i];
-    }
-    b[j]=&#39;\0&#39;;
-}
-</code></pre>
-<p><strong><em>接下来就是将他们组合的时候了</em></strong></p>
-<pre><code class="cpp">#include&lt;iostream&gt;
-#include&lt;cstdio&gt;
-#include&lt;string&gt;
-#include&lt;cstring&gt;
+          <h1 id="洛谷P1073-最优贸易"><a href="#洛谷P1073-最优贸易" class="headerlink" title="洛谷P1073 最优贸易"></a>洛谷P1073 最优贸易</h1><p><a href="https://www.luogu.com.cn/problem/P1073" target="_blank" rel="noopener">最优贸易题目链接</a></p>
+<p><strong>题目描述</strong></p>
+<p>C国有n个大城市和m 条道路，每条道路连接这 n个城市中的某两个城市。任意两个城市之间最多只有一条道路直接相连。这 m 条道路中有一部分为单向通行的道路，一部分为双向通行的道路，双向通行的道路在统计条数时也计为 1条。</p>
+<p>C国幅员辽阔，各地的资源分布情况各不相同，这就导致了同一种商品在不同城市的价格不一定相同。但是，同一种商品在同一个城市的买入价和卖出价始终是相同的。</p>
+<p>商人阿龙来到 C 国旅游。当他得知同一种商品在不同城市的价格可能会不同这一信息之后，便决定在旅游的同时，利用商品在不同城市中的差价赚回一点旅费。设 C 国 n 个城市的标号从 1~ n，阿龙决定从 1号城市出发，并最终在 n 号城市结束自己的旅行。在旅游的过程中，任何城市可以重复经过多次，但不要求经过所有 n 个城市。阿龙通过这样的贸易方式赚取旅费：他会选择一个经过的城市买入他最喜欢的商品――水晶球，并在之后经过的另一个城市卖出这个水晶球，用赚取的差价当做旅费。由于阿龙主要是来 C 国旅游，他决定这个贸易只进行最多一次，当然，在赚不到差价的情况下他就无需进行贸易。</p>
+<p>假设 C国有 5个大城市，城市的编号和道路连接情况如下图，单向箭头表示这条道路为单向通行，双向箭头表示这条道路为双向通行。</p>
+<p>现在给出 n个城市的水晶球价格，m 条道路的信息（每条道路所连接的两个城市的编号以及该条道路的通行情况）。请你告诉阿龙，他最多能赚取多少旅费。</p>
+<h1 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式"></a>输入格式</h1><p>输入格式<br>第一行包含 2 个正整数n和 m，中间用一个空格隔开，分别表示城市的数目和道路的数目。</p>
+<p>第二行 n 个正整数，每两个整数之间用一个空格隔开，按标号顺序分别表示这 n 个城市的商品价格。</p>
+<p>接下来 m 行，每行有3个正整数x,y,z，每两个整数之间用一个空格隔开。如果 z=1，表示这条道路是城市x到城市y之间的单向道路；如果z=2，表示这条道路为城市 x和城市y之间的双向道路。</p>
+<p>1≤n≤100000，1≤m≤5000001，1≤x，y≤n，1≤z≤2，1≤各城市水晶球价格≤100。</p>
+<h1 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式"></a>输出格式</h1><p>一个整数，表示最多能赚取的旅费。如果没有进行贸易，则输出 0。</p>
+<h2 id="思路："><a href="#思路：" class="headerlink" title="思路："></a>思路：</h2><p>缩点 + dp</p>
+<h2 id="实现代码："><a href="#实现代码：" class="headerlink" title="实现代码："></a>实现代码：</h2><pre><code class="cpp">#include &lt;iostream&gt;
+#include &lt;cstdio&gt;
+#include &lt;vector&gt;
+#include &lt;cstring&gt;
 using namespace std;
-struct kkk
-{
-    char num[110];
-}Num[110][110],v[110][110];
-int q[110],w[110],c[110];
-char cz[110];
-void pluss(kkk a,kkk b,int q[],int w[],int c[],char cz[])
-{
-    int lena=strlen(a.num),lenb=strlen(b.num),i,j;
-    for(int i=0,j=lena-1;j&gt;=0;++i,j--)
-    {
-        q[i]=a.num[j]-48;
+
+int n, m, k;
+int from, to, sta;
+int w[100005];
+int vis[100005];
+int Min[100005];
+int dp[100005];
+int cmp[100005];
+int org_min[100005];
+vector&lt;int&gt; g[100005];
+vector&lt;int&gt; rg[100005];
+vector&lt;int&gt; v;
+vector&lt;int&gt; topology[100005];
+
+void add(int from, int to, int sta) {
+    if(sta == 1) {
+        g[from].push_back(to);
+        rg[to].push_back(from);
     }
-    for(int i=0,j=lenb-1;j&gt;=0;++i,j--)
-    {
-        w[i]=b.num[j]-48;
-    }
-    int g=max(lena,lenb);
-    for(int i=0;i&lt;g;++i)
-    {
-        c[g-i]+=q[i]+w[i];
-        if(c[g-i]&gt;=10)
-        {
-            c[g-i]-=10;
-            c[g-i-1]+=1;
-        }
-    }
-    if(c[0])
-        i=0;
-    else
-        i=1;
-    for(j=0;i&lt;=g;++i,j++)
-    {
-        cz[j]=c[i]+48;
-    }
-    cz[j]=&#39;\0&#39;;
-}
-void mycopy(char a[],char b[],int m,int n)
-{
-    int i,j;
-    for(i=m,j=0;i&lt;=n;++i,j++)
-    {
-        b[j]=a[i];
-    }
-    b[j]=&#39;\0&#39;;
-}
-int compare(kkk minmin,char c[])
-{
-    int lenc=strlen(c),lenmin=strlen(minmin.num);
-    if(lenc&gt;lenmin)
-        return 0;
-    else if(lenc&lt;lenmin)
-        return 1;
-    else
-    {
-        if(strcmp(c,minmin.num)&lt;0)
-            return 1;
-        else
-            return 0;
+    else {
+        g[from].push_back(to);
+        rg[from].push_back(to);
+        g[to].push_back(from);
+        rg[to].push_back(from);
     }
 }
-int main()
-{
-    kkk minmin;
-    int m;
-    char a[100];
-    while(cin&gt;&gt;m)
-    {
-        cin&gt;&gt;a+1;
-        int n=strlen(a+1);
-        for(int i=1;i&lt;=n;++i)
-        {
-            for(int j=i;j&lt;=n;++j)
-            {
-               mycopy(a+1,Num[i][j].num,i-1,j-1);
+
+void dfs(int u) {
+    vis[u] = 1;
+    for (int i = 0; i &lt; g[u].size(); i++) {
+        if (!vis[g[u][i]]) dfs(g[u][i]);
+    }
+    v.push_back(u);
+}
+
+void rdfs(int u, int k) {
+    vis[u] = 1;
+    cmp[u] = k;
+    Min[k] = min(Min[k], w[u]);
+    for (int i = 0; i &lt; rg[u].size(); i++) {
+        if (!vis[rg[u][i]]) rdfs(rg[u][i], k);
+    }
+}
+
+int main() {
+    scanf(&quot;%d%d&quot;, &amp;n, &amp;m);
+    fill(Min, Min + n + 1, 100);
+    for (int i = 1; i &lt;= n; ++i) {
+        scanf(&quot;%d&quot;, &amp;w[i]);
+    }
+    for (int i = 0; i &lt; m; ++i) {
+        scanf(&quot;%d%d%d&quot;, &amp;from, &amp;to, &amp;sta);
+        add(from, to, sta);
+    }
+    for (int i = 1; i &lt;= n; i++) {
+        if (!vis[i]) dfs(i);
+    }
+    memset(vis, 0, sizeof(vis));
+    for (int i = v.size() - 1; i &gt;= 0; --i) {
+        if (!vis[v[i]]) rdfs(v[i], ++k);
+    }
+    for (int i = 1; i &lt;= n; ++i) {
+        topology[cmp[i]].push_back(i);
+    }
+    for (int i = 1; i &lt;= k; ++i) {
+        for (int j = 0; j &lt; topology[i].size(); ++j) {
+            int u = topology[i][j];
+            for (int l = 0; l &lt; g[u].size(); l++) {
+                int v = g[u][l];
+                Min[cmp[v]] = min(Min[cmp[u]], Min[cmp[v]]);
+                int org = dp[cmp[v]];
+                dp[cmp[v]] = max(dp[cmp[u]], w[v] - Min[cmp[v]]);
+                dp[cmp[v]] = max(org, dp[cmp[v]]);
             }
         }
-        for(int j=1;j&lt;=n;++j)
-        {
-            mycopy(a+1,v[0][j].num,0,j-1);
-        }
-        for(int i=1;i&lt;=m;i++)
-        {
-            for(int j=1;j&lt;=n;++j)
-            {
-                memset(minmin.num,9,sizeof(minmin.num));
-                minmin.num[109]=&#39;\0&#39;;
-                if(j-1&gt;=i){
-                for(int k=i;k&lt;j;++k)
-                {
-                    memset(q,0,sizeof(q));
-                    memset(w,0,sizeof(w));
-               memset(c,0,sizeof(c));
-                    memset(cz,0,sizeof(cz));
-                 pluss(v[i-1][k],Num[k+1][j],q,w,c,cz);
-                    if(compare(minmin,cz)){
-                        int lencc=strlen(cz);
-                        mycopy(cz,minmin.num,0,lencc-1);}
-                }
-                int lenminmin=strlen(minmin.num);
-                mycopy(minmin.num,v[i][j].num,0,lenminmin-1);}
-            }
-        }
-        int i=0;
-        while(v[m][n].num[i]!=&#39;\0&#39;){
-         cout&lt;&lt;v[m][n].num[i++];}
-        cout&lt;&lt;endl;
     }
-}
+//    for (int i = 1; i &lt;= k; ++i) {
+//        printf(&quot;%d\n&quot;, dp[i]);
+//    }
+    printf(&quot;%d&quot;, dp[cmp[n]]);
+} 
 </code></pre>
-<p>写这道题确实花了很久的时间，无论是写出来还是最终的不断的调试，但是也不得不说它极大的锻炼了我的耐心，在不断的逻辑错误下面找到细节错误确实很锻炼人，这也提醒我在写的时候就要细心细心再细心。希望大家都有所收获。</p>
+<p><img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAEsAhEDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDxDavoPyo2r/dH5U6lZcHtVAM2r6D8qNg/uj8qkkRUI2sGyKbQA3avoPyo2j+6Pyp1HWgBNi+g/Kjaueg/KnBCwJHam0AJtX0H5UbR6D8qdSUAJtX0H5Uu0f3R+VFLmgBCoP8ACPyo2j0H5UtFACbV/uj8qNq+g/KlpWUrweKAEMW0AlRg9OKTYvoPypxYkAEnApAfUUAIFX+6D+FJtH90flTqVV3HFADool6lR+VTbE/uj8qBxQTiqRm2BVP7o/KgRr3VfyoFOoAbsT+6v5UuxP7i/lS0UwDYn9xfyo2J/cX8qWnKMnFADQif3F/Kl2J/cX8q6M6TBJbouNrhcbl71l3OnT2xJK7k/vLTsITTmiSby3jQh/VRwa2RBB/zxj/75Fc4Mg5Fb9vOJIFc9xzW9J9DOa6k32eD/njH/wB8il+zwf8APGP/AL5FPBpa3sjK4wW0P/PGP/vkUht7cdYY/wDvkVbhkaP7uGB6qam8qC5HyHy3/unoarlQXM/7PB/zxj/75FL9mg/54x/98ipJYJbdsY49D/Smqwb6+lKwXG/ZoP8AnjH/AN8impDCcgwR5B/uCphTWGHD/gaVkFxPs0H/ADxj/wC+RS/ZoP8AnjH/AN8in5pryLHt3HgnFFkGon2aD/njH/3yKPs0H/PGP/vgVJmiiyC5i6vpKSJ50Mah1HzADqK5wKFP3V/EV3pGRXMazYeRL50YxG55Hoa5q1P7SNqc+jMliGbJUfQChTGAwMYJPT2pMc0meK5zcGVDjCj34pAq+g/KilpDE2r6D8qCq/3R+VKeDRQAm0eg/KlWMOwUAZNFFAA8QRipUZFKzBlVdq8e1ITk0UAKke87FUEmmlApIKjI9qUEg5BoNACbUx90Z+lJtX0H5U6igBu1f7o/KjavoPyp3FJQAm1f7o/Kl2ptHHP0opRQAm1f7o/KggHHyj8qWkoATaPQUUtFAC4xRRSUALR3pKKAHMdzZxikopRjBz1oAFOD7UhxnjpRT4oXmJCYyBnmgBlGM0YooAKKKKACjFKBzjNIeDQAUpJPU0lABNABRmijFAByKmQYFRqMtUtUiWLmgHmk7UDrmmSOpaSigBaWkoJwKAFq5p0XnXsS9gcn8KpitvQoeJJj/uj+v9KaA3B0oxmgUtaAUrjTLefnbsb1Xiqsdq9puiZgynkGteq94vyq3ocfnTjoyZLQghlDrjPzDgg1MDVdIWYO3lsUBHzY4BPv68U8Bx0OfY10JmDRMKfvz97r61EpyOetOqhFlLklfLlG9P1FV5EXedrdOjCkpad7gNEhRhng9j2NOYqRnGD3FIRkYNRHKepX9RUgSRtkEHqDg1DfjNqxHbBpwf51YHg8GnTrvhdfVTSeqHsxtpP50CsevQ/WrFZOmS4laMnqMitXNEHdBJWY6oLmBbiBonHDCp1BY4FJim1cSOIuIWgmaNuGU4qA10eu2e5BcoOV4b6etc6a4Zx5XY64SuriUUZNFZlhRRRQAUUUUAJS0U4NhCuBz3oAbQee1FFABRSgZpKADtRiiigAoHXmiigBKKKKACiiigApaKKAH4Tys7vmz0qOl6dKMc88UAFFFFABSgkdDikooAKMcZo70dutABSUtFABRR2ooAKcDtBBGc02jrQAqNtcNgHB7095NxLDAJPQVGKUDJoEPUYGfWnUlFUSLmlHSmnpS0wHUUlFAhwqeOPFvJKR0wq/U/8A1qgUZOBWjfoLe3gtx1A3t9TQBRAya6yxh+z2kceMHGT9a57TIPPvUBHyr8xrqBVRAfRSUuasBajuF3QP7DP5c1JQRkEGgRs+CvKmvLmzmVXjmiyVYZBwf/r1P4g8KGwikvLQl7deWjPJQe3qKyfCc/2fX7TJ6sUP4gj+derlA6EEZBHINbXs9DKx4qMHkcilrd8T+Hm0q6NxbL/oshyABwp9P8KwQwPB4PpWidyGhaKKcq5NMRYsLGXULuO3hHzOevYDuTTL21azvJrdjkxuVzjGcd69C8MaL/Z1j50y4uJhk5/hXsP8a4TWZfN1i8bOf3z/AJZxUp3Y7aGVJHwSo69R60+N/MiBPXofrTqZna49G4/GmBkxHydRA9HxW4DxWJfDy7zeO+DWypyBUU9G0VLox4NXIQs8UiY+YfMPr3qlUtvKYZVf061qjNgbQXMEqnlcbWHse9cNdQNb3EkT/eRiDXokLCK+K/wv0/HpXNeLrIRXiXKrhZRg/UVjXheN+xrSlZ2OZ706VFR8K4YY6009aCc1xHSJmlHJ5oC5zyOKfFF5pI3AYGeaQxjAA8HIpKKKADHpRQDRQAUUtAoAKfEYwx8wEjHamEYPNJQA5mLfh0ptFKqMwJAzjk0AJRmijHGaACj60UUAFFJRQAUUtFACkcZpKKKACilJFJQAvQfWk60HnmigAoNFA5NABQBmjFAOOlABQKO1FAB0o96CcmnknaFyMUAMFOXNBXYwB5+lOyCSQMA9qaExaKSlpkB6UtN70tAxaUdaSheaYjR0q3866DEfKnJ+vam6jL5t9IR0X5R+FalnGLLTWkb7xG4/0FYsMbXNyqDq55NMDc0WDy7Yykcuf0rUqJdkEIGQqKO/aqb3sty/l2a5HeUjgVWwFya6jgwGJLH7qLyT+FEIlc+ZL8vogPT6+pqO2s0gy5JeU/edutWQaYD6Wm5py80wGae/karC/wDcnDfqDXsqfdFeOXds1pcoTkF0WT8xXr9o/mWsT/3lB/SteiMuoXVtFd27wzIHjcYIPevLtb0ObTbqUBGa2D7Uk/AHB9DzXrFUZ7WKe4lgmQPFNHyp7kHn+Y/KhOwNHkCqRwTmum8JaP8Abb77TKuYYCDz/E3Yfh1/KpdU8JT214gtAZIJXCqe6E+vt7122mafHptjHbRjhRyf7x7mtG9CLEl3MlraSzOcLGhY/gK8auT50rOSQxJOR1ya9I8Z3v2fSPIU/NO23/gI5P8AQfjXm7daIoGQ7ypw/wD312olBaM469vrTyM8VGVMY+Xlf7vp9KYjOvyJYYph34NaNq++2jb/AGRWZMwKzxA8A71/rVzTW3Wi+xIrOL94qS0L2aWmZpc1qQSeY2VJP3elLrarqGiSMBmSLD4/n+lR5qa3YEtG/wB2RSpo3VgWjucAwptT3MRhnkjbqrEGoK816M7UFFFApDCiiigAxRS8468UlADkjaQ4UZPWm9KUMVPBIpKACiiigBRtGd2enFCsy5wSM9aMMQTgkDvSUAKB8ppKKUKShbsKAEpWIOMDFJRQAlFLRQAUAZoooAKAMmiigAoowaKACiiigAooooAKKKKAClGD1pKKACgUlOBxQAlSDoKj61JTRLCiijvTEH8X4UtPMJECzHoWKimUAIavadbfaLpVIyq8t9Ki8jbaCU9WbC/Qda3dItvJtd7D5pOfw7VSWoDNYm2WqxA8uf0FZ2nz+SzNHE0kx4UdhVuWE6hqjKM+UnDHNbEUEcQwiKo9hina7EUUsproh7yQ47Rr0q8vlwrsjXp/CtNcSF2RdwVhy3936VmajqAsolhtl5OfnP8Ank09hl+4u0gXM0qxDsByxrLk12NG/cwlj/ec1mpa3V2XlZZG28ucEkfWkWJAcY5qHJhoXjr12eixj8K1tN1mGV40uX8skgFtvAqxY2dtJaQsbeLJQE/IK6bw34asNQvGM9nE0Ua5I24yT0rSMWS5Ih8TvbS3ttLaypJE0CgMjAg4Jr0LSW3aVaN6wp/IVwHijQ7HR7yD7DD5SSqSwDEjIPv9a73RT/xJrP8A64p/IVt0Rn1NCq16whjW4OcQnc2Bn5eh/Tn8Ks0FQwIPIPUGkMhi/fv5xBCgYQMMH64qc9KrrDJEf3Unyf3HGQPoev8AOlad0H7yFsdyp3D/AB/SquKxxnja0vHuUuSmbVV2qV/hPfPpXFsMV65canpxPkTzxKXGNkp27h9D1rj9b8Mp81zpbCSPqYgckf7vr9KuMuhLRyFJSsMEjuDjFNqiTM1IeXMkvqCpqXSm/cMPRv6UmqLm2B9GqLSG4kX6VjtUL+ya1Lmm5pc1sZi5ozSUUBY5zXo9mpu2OJAH/Mc/rWVXQeIUyttL7Mh/A5/rWAcdq4aqtNnVTd4oSlHTOKSn728vZxjOayNBlFFFABj1o6UdaD1oAKeInMRkx8oOM00HBzS722FexpgNooBxSk44FIADsFIBwD1FJ0p4wEwV5POaRlx60AIDikzmnMFzhCTxTaADvRSg8HikoASilooAKWkooAKKdnGCDTaAFJJ60lFAoAKKKDjPFABRSkYpKACiiigAopQRu9qCO/rQAlFKDgg0ZO7d3oAQEj8eKkqMnLZp9NEyFoH3qKWN9kitgHDA4NMRp3lglvYxOGbfkbgTxkj0rOjQySKijljgVqapfQiM24/eSnG5v7tVNNkhjvkaZto7Htn3p6AaF3bgz2lov3QOf6/yrYb5IsLwei1VjQSam0nZIwAfrmr2KtAR28CW8QRB9SepPrU1JS0xCGs+KxE1+1xMo2p8sSEcADvWjSr1otcDGg1j7HaX0HlgvOSN+enWsSIlpCcVcaAs0jY7nFXtN0yaXDiJthbk44AqNXoTdI37KPZbRJ6KBXpXhiy+yaUsjDDzHefp2/z71xOk2Jvb+GADgnn2HevTlUJGqKMKowBXQiWcR48H72yb2f8A9lrqND/5Atl/1xT+QrmvHeP9C9cv/wCy10uh/wDIFsv+uKfyFU9hdTRpaSjNSMWo5o0miaORQyMMMpGQRT6Q0AeTeLdEggnl+wTsPKO57SRiGUf3kz1H0rlrfV5oCFdmI/vA4Ir1jxrpFtqVgm50iu9223ZuNzYztz74rxaeNopWRgVZTgg9jUNuL0Ha5vxzJODIjbtxyTnkn3p2a5uKZ4n3RsVPf3rVtdSSXCSYR/0NaQqJ6MiUGiXUADZvmqOktieRfVc1c1Bv9Df8P51R0s/6Uf8AdNKXxoF8LNoUuaQUVuQLmlzUURzH9CR+tPzQBn62N1gp/uyZ/MVzZrptWXNi/sQa5oiuOv8AEdFLYbRRRisDUMUuOKSigAoNFFAAaXtSUe1ADhg4FNIwaKKYhR6HNBJPejOTk80lIYqnawPpTpXEjlgoXPYUztSqpfgcmgBKKKKACiiigAoo7UYxQAUU4Lmk20AIDg0ck04LS4x0pgNBwc0lOxSYpAJRS0cY96AEoopQcUAGe9HGM0nfpSgepxQAlFFB4NABin0z37U+miWFNLYGaceBTCuQKbEjU07Q5r+ITh1AJJ+b2HJNT6Law3DzxzRq4wOvapC0iaFAI2K7mIODjjmrPh+0ljSWZkYKwGGI4PWqSV0Jsu21qtsGVSxUnjcc4HpVik70VYC0UUUALSr96m0oODmgCOwsommmaQAhXIA/Wt6LUI1sjBFEFXpn196xH5c7V643Eng/h3qaNSzjLEmrTSRnyO92d34RsgsUl4w+ZjtX6d66iqOk24tdNgixgqgz9e9X+1UBw/jtv31kvs5/lXU6L/yBrP8A64p/IVx3jlydUt1zwIs/mT/hXZ6QuzSbRfSFB+gpvYXUvUUUUhhSUtJQBgeMrd7jwzeiNQXRN4z7HPHvivDLiV5pWkkYs7HJJ6mvoq9jEtrLG3IZSp/EV89tayS3nkRIXdm2qoGSTms5lRKJUk8VLDazXDbYondvRVJrttF8AXEt6rakyx20YzIFPJP93P8AMiuxl1zRdFhFvaoh28BIV4/PvUqPcdzyOa11GG2KT28yx9cvGRj8abpgIuuf7pr09vGoZsf2cxjP+1XO6zY2V1IusaagiRiUnhxjY3Y496uK1RL2MqlzSUma6TEI+E/En9afUcf+rX6CnZoAragN1lKP9muZY57V1F5zaS/7prlSea5q+6N6Ww00UUVzmoUUpx2pCMdaQwoo6GigApcUlKMZ9qAEopTjJx0pB1GaAFwcZ7UlKTliQOPShiCcgYoATBxQCQeKM0uOM0AJRSjHekoAKKKKACinlDTCCKYDgaeBUXNTIc0IQoWjFPJAqMtTAMCmmlzSYpAIOKbTj0pDwaAEpCMU/qKTvQMTjA45opeRmk2nGe1ACDg5FLjJ5pACachw4LDIHakAhzjGeBSihsEkgYHpQOgpoTA9KcKaacKZJ0dsgk0u1DEBd+CT261rLdOLb7LFnyk4RiO39az7JfK0dDJgbRu5+uaugjGRWqJtrccOBRRRQMWikooAWlFJQKAHCtPRLb7XqlvERkFwT9ByazBXU+DIN+pPIf4I+PqT/wDrqkJneIMKBTjQKD0qyDzrxq2/W1Ufwwgfqa7+0XZaxL6IB+leeeJ/33ihk6/cX9B/jXo8YwgFN7CH0tJRSGFFFRTzx28TSSuFRRkknpQATkCNs+leT+GXs9PnuNTnXzbjeywRjt6tn9PzroNe8USXSSW9kTHGQRv7n/AVycaCKJUHRRioe5SRpar4hvNQcxGTy4+6J0/+vWWHRW6EE92HX8aFYFmXGCD+fvTmAZSD0NIoXNOicoZkH3JoyrA9M4yp/PFQxEmJc9cc0k52wSH/AGTQhMrk01zhGPtRmmv93HqQK6jnHrwAPSlpKWmBDc828g/2T/KuVbrXVz/6l/8AdNcm3WuWvujakJ3ooornNxe1BOaO3vSUAFFLgY61ITF5AAU+Znk+1ICKlzzmk69aUgdqADHBNIeTwKKBxQAUU8FdoyO9IxUtwMCgBuKMkjFKcZ46UlACjB60lHalx8ucUAJRRRQBaIAqNsGh3qImqbEPAAp24AVFRSAeW9KbmkzRmgBc0ZNIuMjPShsbjjpQBLIu1EORz2qInmjNPYx7xtB245+tADO2aBQTmk7UDFJOAD0ozxSGge9ADt2GyvFAJAJ9aaaUDJpAJmnDpQyFMZ70DmmhMDU1vGZZ0jH8TAVCe1aWjR774MeiAmqRJ0aou0DA4GBREfl2/wB04pwpFQKzHP3jn9K0EPpaSigBaKKKAClFJSigBwrtvBKfLdP/ALo/nXEjrXeeCgPsc5/2x/KqQnsdWKG6UCkb7tWQec34+0eN9v8A08IPyxXoy/dFed6ePtPjkt1Ankb8s16KvSmxIWiiikMQnArz7xNrD3d21vG58iI4wP4j6122p3H2bT55s8qhI+teUyvlySaTGkMZs0w0E01s4+XGfeoLGSY3pj72eMenepKYibecksepNJI/G1eXPQUgFiOYlI6EUy4OIWHrxUigIgUdAMVWuHDOqDt8xqo6sT0RHTXPzL9c06o26t7LXSYE1FIOlFMQyb/Uv/umuV2M2SFJA611M3+qf/dNcvvZQVB4PWuav0NqRH1NKylTg9aSjrXMbBRkYozRikMKWkooAM0uBt68+lJSjimISlFGe1JSGL+FGeMUDGQD0pW2hjtPHvQA2ikpccUAFKMdycUmeKU844oAXav96im4ooAUmkpaSmAUUtFABnFHWkoxQAUUtHU0AC4yM9O9K+3cduce9IQR1HNA680AGaMUpGG46UdsUCG4p2PakpcnOaBiUuOM0h60ZxQAck85oHenKQDlqTOWNCEw7itzQU5mf6CsPuK6HQh/osh9X/oKuO5Jr0UUVoIWikpjTIpwTk+ign+VICTNFRxPv3N2zgcYqSgBaUUlKKAHDrXdeCT/AKNcD/bH8q4QV2/gg/u7oe6/1qkJ7HY02Q4QmnVT1SbyNMupQcFImYfUA1ZBxPg9PtHiGe4I4EbN+JI/+vXoQ6VxfgO3wl3P6lUH4ZP9RXa03uCCiig0gMDxXP5WjOoPLsF/r/SvOHOTXceNpsQW8QPVi35f/rrhWPNSy4iGo3DnlGA+oyKRp41ON35DNJ58WQN65PQZqBhsY/fcn2HAp6qqDCgCk3VUvtQjtE5O6Q9FoAku7yO1iLseey+tZ1jK05llc5ZmrInuJLiUySNkn9K1NLGLYn1Y1VN3kTPYv1DI22CR/XP+FSM21CfQVWuyUt407swFdEnoYouDpS0g6UVQDJz+5f8A3TXKNXVTnEEh/wBk1yp61y4jobUuonaijvRXOahUhXEQbse9R0uTjBPFIYmcmlPIzTnVQF2tnI59qaRgUAA4ozxjFJ2ooAO1AoooAUcds0lLjkAUFSvUUAJR1pccZpUbac4zQAlHbFHWk68UAFFLs9xRQAYoxTqKYhtFLRQMSilxS4oAbRTgtLtoEBVmG40BfzpQKXGKAGbTRt5qTFBAosBGV9aKUmkNACsBng5plSALt75pu2gBvWjvS4oPagGFdBoTgwSJ3DZ/T/61c/Wno03l3mwnhxj8apbknS0Ugpa1ERsGdtvIUdT608KFGAMD2paKAEA259zmnUlFAC0tIKWkA4V2Xghv3lyvsp/nXGiut8FNi9nX1jz+tUhPY7sVieK5vJ8P3Pq4CD8SK2h0rk/HM+2xt4QfvyZP4D/69WiC74Ot/J0KNiOZWZ/1x/SuhqlpcH2bTbaHGCkag/XHNXaACkPSlqve3KWdpJO+SqDOB1J7CgDhvG10P7Rii6lY+FHqT/8AqrlDGX5kOf8AZHQf41uala391NLqFxbyDzOrbThR2H0rIYYNQy0RNgCuX1O6aa7Zc/IhwoBrob5pFtm8ofMRjJPT3rkWPNZyKLMeo3USbFlOPfmqzyNIxZ2LMepNNpKkQtbunjbZp75P61gg+ldFbrsgjX0UVtR3InsSMcsq+pqrdtvvLeP0OTVpfmlY/wB0Y/z+lZ6N52rE9lz+lbTfQiJrCikFLVkkF2cWsp/2TXMmui1FttlJ78VzxHGa5a+6NqWwyilorA2Epcc0UUAOZAGwrZ96b0oHWlOA3rQITtRQeKBQMSilooACvoaCxIwTRSqM98UAIDR2pRjmkPPSgAAyaCOaAMmjoaQCYopc0UASZXoDzRg1BjmpN+3AzQZjsc07bTVZW4pyHDYJpoaYbaNtTYFGynYohxSgU8rikoACopcUAVIq0xDBGT2p/lZHSph1x6VIFBp2FcpGEZp3kZFWymO1QudoosO5VZQBTSF8sYJ3Z6VIeaFj5zU2GQEUpHyH1qfywTmkaL5TgdqLAV+4qSJzHIrr1U5FRHtSigk7K3lWeBJF6MM1NWFol3gm3Y9eV/qK3K1TuAtFFFMQUUUUALS02nCkA4V1Pgs/8TOQf9Mj/MVywrqfBY/4mcp/6ZH+YpoT2O+7VxfiP/TvFGn2XVVwWH1OT+grsicLXGaSDqPjW8ujysO4L/6CP61oiDtUGFp1IKWgApCARyKWigCJ41dSpAIPBBrz/wATaH9gm8+Bf3Dnp/dPpXohqlqdml7YywMPvqcex7Umhp2PENauPKg8kH5pP5VzTda3/EeI7hYioDLnd6/561z55rCW5oIT6UmPWloqQHxLvlRfUgV0QOBWLpyb7oHsozWy4yu314P0rporS5lN6iF/KtWkPXBaqGlDdNI57CptUl2wCMdWP6UaSuIWb1aqes0hfZbNGiig1qQUNVbFqB6tWEa1NWk3MiA9s1mGuOs7yOimrIQAUlLQKyLEpxy3OOlJilycYzxQAnFJSjrSkknmgBtKaMUuflwaAEpSpAB9aFAJ5OKUKCCS2MUANGM80Gj8KMUAJ2oxjinY5pxbcNuBx3oAYVI60YOM4paXBC5HSgBMj+6KKSigB4UKc01wCCcc0+kqTMhGQal6DNDLmmEcYqhjlc560/7QcdOaiC8UAdaLjJPP46UqyE9uKgHFPUmhsLkxk54qWNweO9Vx0zRkg5FJSFcuEqvU4qQSAd6zGkY9eacGOOtVzAayuGFVZ0cnjpUMMxU4NWDMDVXuhoijiLHFWRDxTFkwc9KsRuGFNJARiGpBCAKlwDQaqwrmE64Yj0NJUtwMXDj/AGqirMY+N2jdXU4YHINdVY3a3cAccMOGHoa5KrVldtaThxyp4Yeopp2A66io45FljV1OVIyDT60ELRRRQAU4U2lFIBwrrvBKZurh/RAP1/8ArVyIrvPBcGyxmmI+++B9B/8Arqo7iexv6ndCz024uD/AhI+vasPwTZmPTpLpx8078E9wP/r5pvjG5Z4bbTYTmW5kHHsP/rkflXQ2MCWdnDbp92NAo/CrILYpabuHrSgigBaKKKACo5Pumn1HL9w0AeCeMAB4mvlBBVZCBiueNaesOZNVu3J5aZz+prMaud7mqGUUGgVIGrpaYjaQ/wARwKupOjyMqnJXqay3uxDAIYjkgYLCqomdY2QHAY5PvXQqiikjPlu7k99OJrkhTlVGAa1rBNlpGPUZrnec1uwX0HkrlwpAGR6Uqck5NsJrSyL9Vb2fybdiD8x4FV5tViQfuwXP5Cs2a4kuG3SH6Adq0nVSVkTGDb1EuH8x8g5AAAqGlorkbu7m6E70UtFIYAZoIFPHSmkc0ANo6mnHA4oJIGMUANIoxg0uKTFAAeTwKCMcUvIpOTQA9Yg0RfcOO1MpRxQwyeBQAgGRmjjPFGKKAD2pKeo3HFIRg4oAbRT9o9aKAEDfMQaYx54pzkE5FMzRYgeD8vWgsAOaj+lKBwc0WCwrPntTcmkooGOXrzTwy9Kj6UlFgsTHBHWmlscVHk+tFKwrBuNPVwajpQRmm0OxLnBqZASKZCokYEjirqhemKIoEQYJPWp48rTsAdqTIq0gLCycU8HNVBKoOCcVOjqwyDmqTEZ16uLk+4BqvVzUB+8Q+oxVOoe4wpRSUUgOg0O4LRPCT905H0Na4rk7C6+y3Ic52nhseldAupWjAETKPrxVxYFyiqh1G1H/AC3T86P7TtP+ey1V0BcoqoNQtW6Tp+JxVpSCMg5BoESA11emeKLfTdLit1gd5FB3cgDOa5IGobiRggRPvucD29TTTsDVzYm8QT32uf2kiqvlDZGp+YD3/U/nVw+JtTf/AJeSPooFYESCOMIvQVKKdxWRsjxBqZ/5e5Pzrd8PXGqajc7pLqTyI+WJxz7VyNtE88yRoMsxAA969R0qxSwsY4FAyBlj6nvTQmXhS0UVRIVFL9w1LUcgypoA+c9VGNRuR/01b+dZzVteI7c22vX0RGNs7/lmsVutc7NBhpKUikqRhRRSlSPegYlLmjYTTlXFFwsIB60tOIXAx170lAxMUdqWikAmKKWigABxRRiigBKME04YzUpKqOlMCCkpx5NGKAG0UtPC7h70AMo6GjvS0gGmgUtLQAlFKBkUlMAxRRRQBFQBk0h96UCggCKbTulIRQMKD0oo7+tABzSUpz3pKADqal8sEe9MU4NShh2NJiZC64pmKnb5uOhqIjFA0yWGUx8dqnFw2OKphsUoYijUC2bk4wahMjA5zURYmkJJo1EPLs3Oc0+Gdom68elQ9DSg5oGW7iYTIpHUGq9IenFFO9wFo57fjRUkMZkZlAydpoAjpc0lFAC5ozSUUAOBrpNHn82z2E8ocfh2rmRWros2y7MZ6OP1FUnqB0VIFG8ueTjH0paUVoIcKcKaKeo5pIDqPB9gJ75rhxlYRx/vH/JrvgKwvC1r9n0eNiPmlJc/0rerREMWiiimIKYw4p9IaAPFfiJZG38SyS4+WdFcflg/yri2HNevfEzTDNpsF8q5aF9rf7rf/Xx+deUmBmB7VjJalrYqEUgUnpV1IMe5pRBgcCp5SiqseBk8mlxVgx4phWiwyHFGKkK0bTilYZFRin7TRtNIBmKMU4qRRigBuKMVKkeetPKDpRYCvilxxUhC0hVce9ADVwKDzRigKaBCbeKTFSAYpCOOlAxlKSeKMUuBQAylAJNKRihTtbNACEYoPpTzgrnPOelIecYoAQAimkc06jGaAG0UuKKLAQE0lP25pp4OKCAxmkAyaU0g4NACnGcCjnFBoB4oAQ0EcUvXvSAjNAC4FHGaXvSEYpAO3imlh6U0dadgEZoAaaSlowcUxiUtFFACUvSjFJSAMmpKjFPHSgBantshzg4OKgqe2IEhye1MCJhhiPem1LMMStUVAC0UlLQAVLbyGGZJB/CQaipRTA7RGDKCOhGacKpaXL5tjHk8r8p/CrwrRAOFT26GSVVA5JAFQCtfw/B5+sWy44D7j+HNNCPS7SIQW0cS9EUKPwqxTE4FPrQzFopKKAFpKKZLKkS7nOOwwMkn0AoAq6nYpqGnz2sg+WVCv0968jg8J6pe3stvBbEiNyjyHhQQfWvZBA9yMy7o0P8AADgn6n+gqwkKRqFRQqjoAKVrjTscDpnw0tYwGv52lbukfyr+fWuij8H6FHF5Y06Ej1YZP5nmt/FFOyFdnDaz8OtOuYHawBtp8ZUZJU/X0ry3UNMuNOvJLa5jKSocEGvoojNYHiLwxaa9B+8Gy4UfJKByPY+opONxqR4O0RBo247V0et+G7vR5Qs0LbOglHKt+NUrTRL2/YLbWsspPdVOPzrPlLuYxHXik2kV1DeC9bRSx0+XA9MH+RrMn02W2YpNC8bDsykGlyjuZJXNAj5z1FWWjIPSk2VNh3K5BppyDVkpTChosBBzzx1pMVM3J5qMjmkAg46ig08RljgEUzFACUvajHFKsbOcKM96QDSCaQinkYFNxTAbjNGMU8cHilHJyeaQDcZXgc0hHFPwQ3FBXk0wI8UYp+3vShc+1AEeKKfiigCqMnFIQQeaU7uo6UhJbrUolCqN3BprLtNJnBGKeQTTHYaOadjim45oII5oEJu5ptHelAzQUKBkUDPSlBx2p4AI6UCGj7vSm5waeRTD1pCEJyaUtn6UbTS9FpjEwM0Ypeope1IQ3pSGnHikNAxtPXpSAZoHBxTAdSqTupooGd3FIBzHLUlB7UDmhAhyqWIAGSadJGY3Kk5Iq5pyRhjI556KKtvp6yzeYWJB7CrSuguZCRs5wqkn2FWY7CU8thR+tbUVsAAiJj2ArZs/CWq3oDJasiH+KQ7R+vNUoCuYulx+TvjBJB+bmtMVcu/CupaTELqZIzEDtYo+cZ/+viqfQ07WC9xy11Pg2HfqTydkQ/rXLrXceCoMW1xN6sFH4f8A66cdxPY68dKXNNFLmrIHZpM1DNPHCheR1VR1LHArmb/xjAkpitEMmDhpc4H4eppgdO83z+XGN8nXHp7n0qSG32N5kjb5T/F2HsB2rkoPGdtCm0WbjuTvBJPqamHji2720v5iiwjr80Zrkx43s+9vN+lSL40089UmH/AR/jTsB1GaM1zy+L9LbrI6/VDRFrlxqTY022/d5wbibhR9B3oA32dUUszAAdSTVcTvMSIYzt/56OMD8B1NQ29ptIkuZmuJeuW4VfovQfzq6GFICpLp0V0u27/frnOxh8v5f45qxHBHEoWNFVR0AGBUmaKAE2j0qtdWFteRmO4gjlU9mXNWiajkmjiXdI6qPVjigDiNY+HtvMGl02TyX/55Pyp+h6j9a4TU9BvdLl2XUDJno38J+hr2OTXdMjOGu4yf9k5/lVSfXNEuo2hmmR0bgq8ZIP6UnEpSPEnTb2qFgMnNesSeGfC1+T5EwjY/3JcfoaxNV+HNxHG0unzicDkRt8rfgeh/SocWUpI87Yc03FW57d4JWjkRldTgqRgg1EyYArOxZBijbUuynBKLBchCU8ArypIqXbQRRYLkBTNN2cVORTWUseBRYLkWwnpzRtqURMFz2pGBxjFFgIyMYoJJ5NO2Gl29qQDMCnKmeacAAhBX5uxpUU0wE2GipvLoosIyd5AxUZNSHGelJ5Wcc9ahArDEGWGatYG3Kio1iVTnNDSYBFMl6gV3E54qMqfqKVWyeWpwkUdqBkZXihDg084fpRjbxSuFxGA6imK2DT6aRmmhjiaAAeaRgAM5pFbHXpSsKwZOeaQn5QKfuHpxTWIPSgYcY4pAaTvS07AL0pPpSA05Rk80AJmk60/aKAMUrhcb05py9TSYyaeowTQFxpGOe9LTgNxINAjywAoSESRzMnArqfDWhanrcy+Smy3X78zj5R9PU1reFvh+btUvdWVooPvLD0Zx7+grqtR8R2ulwCy0uOP5BtBUfIn09a2hB7ktkyWei+FLYSzYluMcEgF2P+yO1ZNz4yvpSfJSOFe2BuP5muamupr24a4ndnJ+6WP603NaEmte+JNQurGaCZ0kR16FBWQG3DI6GoZpDtZUPzY5P90U+IYiQHsoqZPUqJMvWvSPCkXl6JGe7szfrj+lebIea9Lsbu30zQrZp5AiiMHnuevFERyNrdgVi6r4ltNPBRT5sw/hU8D6muZ1fxXPd7orYmGHuf4m/wAK5hnadiSf3f8A6F/9aqv2Jt3NPUdau9WkJkkIizwo4H4f41S3YGB0pmaTNNITY/caNxpmaTdTES7jTWm28dT2A61D5hc4Tgf3v8KcoCjjqep9aLgPG5+XPH90VajvZ4lCxzSKB0CsRVTNG6gDSXWL5TkXc4/7aGrcPifVISMXTN7MAawt1LmgDtbPxvIpAu4FYd2Q4P5V0UPiLTZbVrj7UiKoywc4I/CvJWm5Kpy36D60qr825zuf1PQfQUgO11HxX9u3R28z2ttnlwuZZB7DjaPqc+1URqmlEgzwXlyRxmWb+grm93vTGkJJVOT3PYUAdlBrPh9SN2lAe5UN/OtKDVPDEpAMVrGf+mkAH9K87CZ++zMfrx+VSJtU8KPyoA9RhXw/McRLpzEjooTNXobO0Qf6OAgznEbYH5dK4jSvFKWarHJZQhBxmIbT/wDXrt9Ov7bULcT2zAg9R0IPoaAOJ8a+E7u+uft9lEkny4kVeGPocd683lt2jYqwII4INfRRAIrlPE/hCDV42uLZVjvB36B/Y+/vUuJSkeN7Oacq+1aVxYSW07wzIUkQ4ZT2NQ+TiosWVClAjzVvyxSbBRYCm0fNJsxVtkAqMrmlYZB0HNNxmp/LzSiKiwEGzNOYFlUHHy+lT7OOlMaM0WAi8sA808RgU9VJPNL92gBmw+lFSeYaKBGKyBhTckccVC07YzgVF5zbu1ZCSLA5bApSmOSagEzb+gpXmY4yBQMcw54pMYpvmsD0FBmY54FFwJRxSMSDUXmsOwoaZiOQKSAlBJPFPIGPeqolYelPEze1MBxBIpnOaDM3oKYZDnoKCkT5+WmVF5je1HmH0FO4E1PA3DioPMPoKesrAdBQxEjIVoQgdaQzMV5AqEytnoKSdxLUtcZ46UjD0qATN7UombPQUgJQtSqvGDVYTNu6Cnids9BTEWre0muJ0hgRpJHOFVRkk16h4d8IWegQjU9ZaNp15VDyqH+rVgeDr3+z7M3UVtA87sR5kikkD0HPFVtW8S6hf3bNOYyFJCqAQAPzraKS1E7nT6z4mmv90MGYrf0HVvrXNyOXbZ+LH2rLOpz/AN2P8j/jTI9SmCZ2oSeTwf8AGr5ibGzmoncsSkfXu3p/9esuTU58AAIMnGQD/jSrqMqjASMD6H/Gk5FKJoyKEgZR1bjPqTxUwrGfUpiyZWPrnof8af8A2nN/dj/I/wCNRcs1wcVNJcyyqokkZgowu45wKw/7Tm/ux/kf8aY+pzHapVME88H/ABp3A18mU8/cH/j3/wBapM1kDU5sfcj/ACP+NJ/ac/8Adj/I/wCNWmkZvU180mayf7Tm/ux/kf8AGj+05/7sf5H/ABp3FY1WcKMn/wDXTAGfl+B/d/xrKj1KYgOVjLH2PH60/wDtOb+7H+R/xouFjWozWT/ac392P8j/AI0f2nN/dj/I/wCNFwsa2aM1kf2nN/dj/I/40f2nP/dj/I/40XCxrFgBknApgLSHuq/qf8KyRqUzOSVjODwMH/GpP7Tm/ux/kf8AGlcLGsAFGAMClzWR/ac392P8j/jTX1ScISFjB+h/xp3CxrFixKqfqfSnKAowBgVkLqUyjASP8j/jSjU5v7sf5H/Gi4WNgGlBrH/tOf8Aux/kf8aP7Un/ALsf5H/Gi4WNoGtbRdXl0u7EiElDw6Z6iuR/tSf+7H+R/wAacuqzj+GP8j/jT5gse92d3FeWyTwtuRxkGrGM15H4Y8VahatJCiwtGRuwyk4P510v/CY6h/zxtf8Avlv/AIqlcLF/xT4bTUoGubdALpB2/jHp9a8xliKMQQQR2rvz4w1A/wDLG1/75b/4quF8RapI+qPIIYULgMwVSBn86TY0U2B9KjIqqdRl/uR/kf8AGmHUJf7kf5H/ABqWyy0c03kdarG/l/uR/kf8aa1/L/dT8j/jSuBeAFLis8ahLjG1PyP+NB1CXH3U/I/40XA0DgUhK4rNN/Lnon5Gmm+l/up+RouM0+BTSAazft0vov5GlF9L/dT8jSuBobRRVL+0Jf7qfkf8aKLgf//Z" alt></p>
 
         </div>
         <!-- .entry-content -->
@@ -518,36 +426,19 @@ int main()
       <div class="toc" style="background: none;"></div>
       <section class="post-squares nextprev">
         
-          
-            <div class="post-nepre half previous">
-          
-            <a href="/2020/11/13/最优贸易/" rel="prev">
-              <div class="background">
-                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://cdn.jsdelivr.net/gh/JXNU-SONG/cdn@1.1.3/images/cover/02.png" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://cdn.jsdelivr.net/gh/JXNU-SONG/cdn@1.1.3/images/cover/02.png">
-              </div>
-              <span class="label">
-              Previous Post</span>
-              <div class="info">
-                <h3>
-                洛谷P1073 最优贸易</h3>
-                <hr>
-              </div>
-            </a>
-          </div>
-        
         
           
-            <div class="post-nepre half next">
+            <div class="post-nepre full next">
           
-            <a href="/2020/04/01/我的创建博客感想/" rel="next">
+            <a href="/2020/04/01/Hexo-Theme-Sakura/" rel="next">
               <div class="background">
-                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://cdn.jsdelivr.net/gh/JXNU-SONG/cdn@1.1.0/images/cover/chuang.png" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://cdn.jsdelivr.net/gh/JXNU-SONG/cdn@1.1.0/images/cover/chuang.png">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://cdn.jsdelivr.net/gh/JXNU-SONG/cdn@1.0.4/images/cover/ailisi.png" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://cdn.jsdelivr.net/gh/JXNU-SONG/cdn@1.0.4/images/cover/ailisi.png">
               </div>
               <span class="label">
               Next Post</span>
               <div class="info">
                 <h3>
-                初创博客感想</h3>
+                最佳加法表达式</h3>
                 <hr>
               </div>
             </a>
